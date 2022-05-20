@@ -1,0 +1,41 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-register-form',
+  templateUrl: './register-form.component.html',
+  styleUrls: ['./register-form.component.scss']
+})
+export class RegisterFormComponent implements OnInit {
+
+  registrationForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.registrationForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      birthday: ['', [Validators.required]],
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+      checkpass: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]]
+    }, { validator: this.checkPassword });
+   }
+
+  ngOnInit(): void {
+    
+  }
+
+  register() {
+    console.log('register')
+    console.log(this.registrationForm.value)
+  }
+
+  checkPassword(group: FormGroup): any {
+    const pass = group.controls.password?.value
+    const checkpass = group.controls.checkpass?.value
+    return pass === checkpass ? null : { notSame: true }
+  }
+
+}
