@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class RegisterFormComponent implements OnInit {
 
   registrationForm: FormGroup;
+  inputPassType: boolean = false;
+  inputCheckType: boolean = false;
 
   constructor(
     private fb: FormBuilder
@@ -23,19 +25,26 @@ export class RegisterFormComponent implements OnInit {
     }, { validator: this.checkPassword });
    }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {  }
 
   register() {
-    console.log('register')
+    console.log('Este es el formulario de Registro')
     console.log(this.registrationForm.value)
+    this.registrationForm.reset()   
   }
 
   checkPassword(group: FormGroup): any {
     const pass = group.controls.password?.value
     const checkpass = group.controls.checkpass?.value
     return pass === checkpass ? null : { notSame: true }
+  }
+
+  toggleInputPassType() {
+    this.inputPassType = !this.inputPassType;
+  }
+  
+  toggleInputCheckType() {
+    this.inputCheckType = !this.inputCheckType;
   }
 
 }

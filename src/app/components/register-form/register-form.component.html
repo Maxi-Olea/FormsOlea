@@ -1,5 +1,5 @@
 <div class="container d-flex justify-content-center p-4">
-    <div class="card bg-secondary bg-opacity-25 rounded-4 text-light" style="width: 32rem;">
+    <div class="card bg-secondary bg-opacity-25 rounded-4 text-light shadow" style="width: 28rem;">
         <div class="card-body">
           <h3 class="card-title text-center fst-italic fw-bolder">Formulario de Registro</h3>
             <form [formGroup]="registrationForm" (ngSubmit)="register()" >
@@ -48,7 +48,12 @@
                 </div>
                 <div class="mb-2">
                   <label for="password" class="form-label">Contraseña</label>
-                  <input type="password" class="form-control bg-dark border-secondary text-white-50" formControlName="password" id="password" aria-describedby="passhelp">
+                  <div class="input-group">
+                    <input [type]="inputPassType ? 'text' : 'password'" class="form-control bg-dark border-secondary text-white-50" formControlName="password" id="password" aria-describedby="passhelp">
+                    <span class="input-group-text bg-dark text-white-50 border-secondary">
+                      <i class="fa text-white-50" [ngClass]="{'fa-eye-slash': inputPassType, 'fa-eye': !inputPassType}" (click)="toggleInputPassType()"></i>
+                    </span>
+                  </div> 
                   <div id="passhelp" class="form-text text-white-50">La contraseña debe contener entre 8 y 20 caracteres alfanuméricos</div>
                   <span class="text-danger" *ngIf="registrationForm.get('password')?.touched && registrationForm.get('password')?.errors?.['required']">
                     Es necesario que escriba una contraseña
@@ -60,9 +65,15 @@
                     La contraseña tiene un limite <strong>máximo de 20 caracteres alfanuméricos</strong>.
                   </span>
                 </div>
+                
                 <div class="mb-4">
                   <label for="checkpass" class="form-label">Reingrese la contraseña</label>
-                  <input type="password" class="form-control bg-dark border-secondary text-white-50" formControlName="checkpass" id="checkpass">
+                  <div class="input-group">
+                    <input [type]="inputCheckType ? 'text': 'password'" class="form-control bg-dark border-secondary text-white-50" formControlName="checkpass" id="checkpass">
+                    <span class="input-group-text bg-dark text-white-50 border-secondary">
+                      <i class="fa fa-eye text-white-50" [ngClass]="{'fa-eye-slash': inputCheckType, 'fa-eye': !inputCheckType}" (click)="toggleInputCheckType()"></i>
+                    </span>
+                  </div>
                   <span class="text-danger" *ngIf="registrationForm.get('checkpass')?.touched && registrationForm.get('checkpass')?.errors?.['required']">
                     Es necesario que escriba una contraseña
                   </span>
@@ -81,5 +92,6 @@
                 </div>
             </form>
         </div>
+        <span class="text-info text-center">* El resultado del formulario se muestra por consola</span>
       </div>    
 </div>
